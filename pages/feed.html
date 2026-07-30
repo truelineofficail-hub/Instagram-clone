@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reels</title>
+    <!-- FontAwesome for Navigation Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/feed.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        /* App Main Wrapper Container */
+        .app-container {
+            position: relative;
+            width: 360px;
+            height: 640px;
+            background: black;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Reels Feed Snap Container */
+        .reels-feed {
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+        }
+        
+        .reels-feed::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Individual Reel Item */
+        .reel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            background: black;
+            cursor: pointer;
+        }
+        
+        /* Video Styling */
+        .reel-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Overlay Layer */
+        .reel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 10%, transparent 40%, rgba(0, 0, 0, 0.2) 100%);
+            color: white;
+            pointer-events: none;
+        }
+        
+        .reel-details *,
+        .reel-actions * {
+            pointer-events: auto;
+        }
+        
+        /* Top Bar for Global Audio Toggle */
+        .top-bar {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+        }
+        
+        .audio-toggle-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            font-weight: 600;
+        }
+        
+        /* Details at the bottom left */
+        .reel-details {
+            position: absolute;
+            bottom: 64px;
+            left: 16px;
+            right: 80px;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1px solid #fff;
+        }
+        
+        .username {
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .follow-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .follow-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .caption {
+            font-size: 13px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .audio-tag {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        /* Actions on the bottom right */
+        .reel-actions {
+            position: absolute;
+            right: 12px;
+            bottom: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .action-btn.liked .heart-icon {
+            color: #ff3040;
+        }
+        
+        .action-btn .count {
+            font-size: 11px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        
+        .audio-disc {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            font-size: 12px;
+            animation: spin 3s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Bottom Navigation Bar */
+        .navbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 54px;
+            background-color: #000;
+            border-top: 1px solid #262626;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 20;
+        }
+        
+        .navbar a {
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+        }
+        
+        .navbar a:hover {
+            opacity: 0.7;
+        }
+        
+        .profile-nav {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="app-container">
+        <div class="reels-feed" id="reelsFeed">
+            <div class="top-bar">
+                <button class="audio-toggle-btn" id="globalAudioBtn">🔇 Unmute</button>
+            </div>
+        </div>
+        
+        <div class="navbar">
+            <a href="/index.html"><i class="fa-solid fa-house"></i></a>
+            <a href="/pages/reel/feed.html"><i class="fa-solid fa-play"></i></a>
+            <a href="/pages/chatpage/chat.html"><i class="fa-regular fa-paper-plane"></i></a>
+            <a href="/pages/searchpage/search.html"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="/pages/profile/profile.html"><img class="profile-nav" src="/image/pfp/krishna.jpg" alt="Profile"></a>
+        </div>
+    </div>
+    
+    <script>
+        const reelsData = [
+            { id: 1, user: "nature_lover", caption: "Breathtaking mountain views! 🏔️ #nature #mountains", likes: 12500, likesFormatted: "12.5K", comments: "342", audio: "Original Audio - nature_lover", avatar: "https://via.placeholder.com/32", video: "/image/video/2.mp4" },
+            { id: 2, user: "urban_explorer", caption: "City lights never sleep. ✨ #citylife #night", likes: 8100, likesFormatted: "8.1K", comments: "120", audio: "Lofi Beats - Chillhop", avatar: "https://via.placeholder.com/32", video: "/image/video/1.mp4" },
+            { id: 3, user: "chef_gordon", caption: "Quick and easy pasta recipe! 🍝 #foodie #cooking", likes: 45200, likesFormatted: "45.2K", comments: "1.2K", audio: "Cooking Jazz - Chef", avatar: "https://via.placeholder.com/32", video: "/image/video/3.mp4" },
+            { id: 4, user: "fitness_freak", caption: "Push your limits every single day! 💪 #workout #gym", likes: 9300, likesFormatted: "9.3K", comments: "89", audio: "Workout Anthem - DJ Mix", avatar: "https://via.placeholder.com/32", video: "/image/video/4.mp4" },
+            { id: 5, user: "tech_insider", caption: "Futuristic workspace setup check. 💻 #tech #desksetup", likes: 22400, likesFormatted: "22.4K", comments: "510", audio: "Synthwave - Cyberpunk", avatar: "https://via.placeholder.com/32", video: "/image/video/5.mp4" },
+            { id: 6, user: "wanderlust_jen", caption: "Lost in the streets of old town. 🗺️ #travel #europe", likes: 14800, likesFormatted: "14.8K", comments: "230", audio: "Acoustic Breeze - Travel", avatar: "https://via.placeholder.com/32", video: "/image/video/6.mp4" },
+            { id: 7, user: "pet_world", caption: "Cutest puppy moments compilation! 🐶 #dogs #cute", likes: 89100, likesFormatted: "89.1K", comments: "4.5K", audio: "Happy Ukulele - Pets", avatar: "https://via.placeholder.com/32", video: "/image/video/7.mp4" },
+            { id: 8, user: "art_gallery", caption: "Creating a masterpiece from scratch. 🎨 #art #painting", likes: 18600, likesFormatted: "18.6K", comments: "315", audio: "Classical Piano - Mozart", avatar: "https://via.placeholder.com/32", video: "/image/video/8.mp4" },
+            { id: 9, user: "car_enthusiast", caption: "Night drives hit different. 🏎️ #cars #supercars", likes: 33900, likesFormatted: "33.9K", comments: "940", audio: "Phonk Drift - Speed", avatar: "https://via.placeholder.com/32", video: "/image/video/9.mp4" },
+            { id: 10, user: "daily_zen", caption: "Morning meditation routine. 🧘‍♀️ #mindfulness #yoga", likes: 7400, likesFormatted: "7.4K", comments: "95", audio: "Tibetan Singing Bowl - Zen", avatar: "https://via.placeholder.com/32", video: "/image/video/10.mp4" }
+        ];
+        
+        const feedContainer = document.getElementById('reelsFeed');
+        let isGlobalMuted = true;
+        
+        reelsData.forEach((reel) => {
+            const reelDiv = document.createElement('div');
+            reelDiv.className = 'reel-container';
+            reelDiv.innerHTML = `
+                <video class="reel-video" data-src="${reel.video}" preload="none" loop muted playsinline></video>
+                <div class="reel-overlay">
+                    <div class="reel-details">
+                        <div class="profile-info">
+                            <img src="${reel.avatar}" alt="Profile" class="avatar">
+                            <span class="username">${reel.user}</span>
+                            <button class="follow-btn" onclick="toggleFollow(this)">Follow</button>
+                        </div>
+                        <p class="caption">${reel.caption}</p>
+                        <div class="audio-tag">
+                            <span>🎵 ${reel.audio}</span>
+                        </div>
+                    </div>
+                    <div class="reel-actions">
+                        <button class="action-btn" onclick="toggleLike(this, ${reel.likes}, '${reel.likesFormatted}')">
+                            <i class="fa-regular fa-heart heart-icon"></i> 
+                            <span class="count">${reel.likesFormatted}</span>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fa-regular fa-comment"></i> 
+                            <span class="count">${reel.comments}</span>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fa-regular fa-share-from-square"></i> 
+                            <span class="count">Share</span>
+                        </button>
+                        <div class="audio-disc">🎵</div>
+                    </div>
+                </div>
+            `;
+            feedContainer.appendChild(reelDiv);
+        });
+        
+        const globalAudioBtn = document.getElementById('globalAudioBtn');
+        globalAudioBtn.addEventListener('click', () => {
+            isGlobalMuted = !isGlobalMuted;
+            globalAudioBtn.innerText = isGlobalMuted ? "🔇 Unmute" : "🔊 Mute";
+            
+            document.querySelectorAll('.reel-video').forEach(video => {
+                if (!video.paused) {
+                    video.muted = isGlobalMuted;
+                }
+            });
+        });
+        
+        const observerOptions = {
+            root: feedContainer,
+            threshold: 0.6
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (entry.isIntersecting) {
+                    if (!video.src) {
+                        video.src = video.getAttribute('data-src');
+                        video.load();
+                    }
+                    video.muted = isGlobalMuted;
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reel-container').forEach(container => {
+            observer.observe(container);
+            
+            container.addEventListener('click', (e) => {
+                if (e.target.closest('.reel-actions') || e.target.closest('.reel-details') || e.target.closest('.top-bar')) return;
+                const vid = container.querySelector('video');
+                if (vid.paused) {
+                    vid.muted = isGlobalMuted;
+                    vid.play();
+                } else {
+                    vid.pause();
+                }
+            });
+        });
+        
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+        
+        function toggleLike(btn, baseLikesCount, formattedString) {
+            const heartIcon = btn.querySelector('.heart-icon');
+            const countSpan = btn.querySelector('.count');
+            
+            if (!btn.classList.contains('liked')) {
+                btn.classList.add('liked');
+                heartIcon.classList.remove('fa-regular');
+                heartIcon.classList.add('fa-solid');
+                countSpan.innerText = formatNumber(baseLikesCount + 1);
+            } else {
+                btn.classList.remove('liked');
+                heartIcon.classList.remove('fa-solid');
+                heartIcon.classList.add('fa-regular');
+                countSpan.innerText = formattedString;
+            }
+        }
+        
+        function toggleFollow(btn) {
+            if (btn.innerText === 'Follow') {
+                btn.innerText = 'Following';
+                btn.style.opacity = '0.7';
+            } else {
+                btn.innerText = 'Follow';
+                btn.style.opacity = '1';
+            }
+        }
+    </script>
+    
+</body>
+
+</html>
