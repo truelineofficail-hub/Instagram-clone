@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-image: url("/image/story/1.jpg");
+}
+
+.story-img{
+    background-image: url("/image/story/1.jpg");
+}
+.story {
+    width: 100vw;
+    height: 100dvh;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+}
+
+.img1{
+    background-image: url("/image/story/1.jpg");
+    background-size: cover;
+}
+
+.img2{
+    background-image: url("/image/post/16.jpg");
+    background-size: cover;
+}
+
+.img3{
+    background-image: url("/image/story/1.jpg");
+    background-size: cover;
+}
+
+.img4{
+    background-image: url("/image/story/2.jpg");
+    background-size: cover;
+}
+
+.img5{
+    background-image: url("/image/post/11.jpg");
+    background-size: cover;
+    background-origin: cover;
+}
+
+.img1{
+    background-image: url("/image/story/1.jpg");
+    background-size: cover;
+}
+
+.img6{
+    background-image: url("/image/post/20.jpg");
+    background-size: cover;
+}
+
+.img7{
+    background-image: url("/image/story/3.jpg");
+    background-size: cover;
+}
+
+.progress {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 4px;
+}
+
+.progress span {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, .35);
+    border-radius: 10px;
+}
+
+.progress span:first-child {
+    background: #fff;
+}
+
+.top {
+    position: absolute;
+    top: 28px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.left h4 {
+    font-size: 16px;
+    
+}
+
+.left p {
+    font-size: 13px;
+    color: #ddd;
+}
+
+.music {
+    position: absolute;
+    top: 88px;
+    left: 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.timer {
+    position: absolute;
+    top: 88px;
+    right: 16px;
+    font-size: 18px;
+}
+
+.content {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    bottom: 90px;
+    color: #000;
+}
+
+.s{
+    top: 390px;
+    font-weight: 700;
+}
+
+.radha{
+    left: 190px;
+    top: 70px;
+    font-weight: 700;
+    font-size: 8px;
+}
+
+.krishna{
+    left: 40px;
+    top: 60px;
+    font-weight: 700;
+    font-size: 8px;
+    color: #fff;
+}
+
+.ryuk{
+    color: #fff;
+    font-family: fantasy;
+    font-weight: 500;
+}
+.bottom {
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.message {
+    flex: 1;
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 30px;
+    padding: 14px 18px;
+    color: #ddd;
+}
+
+.icons {
+    display: flex;
+    gap: 18px;
+    font-size: 28px;
+}
+
+#heart:hover {
+    color: red;
+    background: red;
+}
+
+h3 {
+    padding: 20px;
+    font-family: fantasy;
+    font-weight: 300;
+}
