@@ -13,12 +13,12 @@ body {
 }
 
 .img1{
-    background-image: url("../../image/story/1.jpg");
+    background-image: url("../image/story/1.jpg");
     background-size: cover;
 }
 
 .img2{
-    background-image: url("../../image/post/16.jpg");
+    background-image: url("../image/post/16.jpg");
     background-size: cover;
 }
 
@@ -34,11 +34,6 @@ body {
 
 .img5{
     background-image: url("../image/post/11.jpg");
-    background-size: cover;
-}
-
-.img1{
-    background-image: url("../image/story/1.jpg");
     background-size: cover;
 }
 
