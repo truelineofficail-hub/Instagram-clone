@@ -10,40 +10,55 @@ body {
     align-items: center;
     max-height: 100vh;
     font-family: Arial, sans-serif;
+    background-image: url("/image/story/1.jpg");
+}
+
+.story-img{
+    background-image: url("/image/story/1.jpg");
+}
+.story {
+    width: 100vw;
+    height: 100dvh;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
 }
 
 .img1{
-    background-image: url("../image/story/1.jpg");
+    background-image: url("/image/story/1.jpg");
     background-size: cover;
 }
 
 .img2{
-    background-image: url("../image/post/16.jpg");
+    background-image: url("/image/post/16.jpg");
     background-size: cover;
 }
 
 .img3{
-    background-image: url("../image/story/1.jpg");
+    background-image: url("/image/story/1.jpg");
     background-size: cover;
 }
 
 .img4{
-    background-image: url("../image/story/2.jpg");
+    background-image: url("/image/story/2.jpg");
     background-size: cover;
 }
 
 .img5{
-    background-image: url("../image/post/11.jpg");
+    background-image: url("/image/post/11.jpg");
     background-size: cover;
 }
 
+}
+
 .img6{
-    background-image: url("../image/post/20.jpg");
+    background-image: url("/image/post/20.jpg");
     background-size: cover;
 }
 
 .img7{
-    background-image: url("../image/story/3.jpg");
+    background-image: url("/image/story/3.jpg");
     background-size: cover;
 }
 
