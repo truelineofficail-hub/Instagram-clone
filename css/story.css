@@ -44,6 +44,12 @@ body {
 .img5{
     background-image: url("../image/post/11.jpg");
     background-size: cover;
+    background-origin: cover;
+}
+
+.img1{
+    background-image: url("../image/story/1.jpg");
+    background-size: cover;
 }
 
 .img6{
@@ -55,6 +61,100 @@ body {
     background-image: url("../image/story/3.jpg");
     background-size: cover;
 }
+.img8{
+    background-image: url("../image/story/6.png");
+    background-size: cover;
+}
+.img9 {
+    background-image: url("../image/story/8.jpg");
+    background-size: cover;
+}
+.img10 {
+    background-image: url("../image/story/9.jpg");
+    background-size: cover;
+}
+.img11 {
+    background-image: url("../image/story/moon5.webp");
+    background-size: cover;
+}
+.img12 {
+    background-image: url("../image/story/11.jpg");
+    background-size: cover;
+}
+.img13 {
+    background-image: url("../image/story/12.jpg");
+    background-size: cover;
+}
+.img14 {
+    background-image: url("../image/story/13.jpg");
+    background-size: cover;
+}
+.img15 {
+    background-image: url("../image/story/14.png");
+    background-size: cover;
+}
+.img16 {
+    background-image: url("../image/story/moon10.webp");
+    background-size: cover;
+}
+.img17 {
+    background-image: url("../image/story/16.jpg");
+    background-size: cover;
+}
+.img18 {
+    background-image: url("../image/story/17.jpg");
+    background-size: cover;
+}
+.img19 {
+    background-image: url("../image/story/moon13.webp");
+    background-size: cover;
+}
+
+.img20 {
+    background-image: url("../image/story/moon14.webp");
+    background-size: cover;
+}
+
+.img21 {
+    background-image: url("../image/story/moon15.webp");
+    background-size: cover;
+}
+
+.img22 {
+    background-image: url("../image/story/21.jpg");
+    background-size: cover;
+}
+
+.img23 {
+    background-image: url("../image/story/22.jpg");
+    background-size: cover;
+}
+
+.img24 {
+    background-image: url("../image/story/20.jpg");
+    background-size: cover;
+}
+
+.img25 {
+    background-image: url("../image/story/19.jpg");
+    background-size: cover;
+}
+
+.img26 {
+    background-image: url("../image/story/moon2.webp");
+    background-size: cover;
+}
+
+.img27 {
+    background-image: url("../image/story/18.jpg");
+    background-size: cover;
+}
+
+.img28 {
+    background-image: url("../image/story/moon13.webp");
+    background-size: cover;
+}
+
 
 .progress {
     position: absolute;
