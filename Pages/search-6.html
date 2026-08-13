@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/search-reel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    
+    <div class="reel-container" id="reelContainer">
+        
+        <div class="top-bar">
+            <button class="audio-toggle-btn" id="audioBtn"><i class="fa-solid fa-volume-xmark"></i> Unmute</button>
+        </div>
+        
+        <video class="reel-video" id="reelVideo" src="../image/video/6.mp4" loop muted playsinline autoplay></video>
+        
+        <div class="reel-overlay">
+            
+            <div class="reel-details">
+                <div class="profile-info">
+                    <img src="../image/pfp/geto.jpg" alt="Profile" class="avatar">
+                    <span class="username">geto_nk</span>
+                    <button class="follow-btn" id="followBtn">Follow</button>
+                </div>
+                <p class="caption">Follow for more✨✨</p>
+                <div class="audio-tag">
+                    <span><i class="fa-solid fa-music"></i> Original Audio - nature_lover</span>
+                </div>
+            </div>
+            
+            
+            <div class="reel-actions">
+                <button class="action-btn" id="likeBtn">
+                    <span class="heart-icon"><i class="fa-solid fa-heart"></i></span>
+                    <span class="count" id="likeCount">12500</span>
+                </button>
+                <button class="action-btn"><i class="fa-solid fa-comment"></i> <span class="count">342</span></button>
+                <button class="action-btn"><i class="fa-solid fa-paper-plane"></i> <span class="count">Share</span></button>
+                <div class="audio-disc"><i class="fa-solid fa-music"></i></div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        const container = document.getElementById('reelContainer');
+        const video = document.getElementById('reelVideo');
+        const audioBtn = document.getElementById('audioBtn');
+        
+        container.addEventListener('click', (e) => {
+            if (e.target.closest('.reel-actions') || e.target.closest('.reel-details') || e.target.closest('.top-bar')) return;
+            
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+        
+        audioBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+            audioBtn.innerHTML = video.muted ?
+                '<i class="fa-solid fa-volume-xmark"></i> Unmute' :
+                '<i class="fa-solid fa-volume-high"></i> Mute';
+        });
+        const likeBtn = document.getElementById('likeBtn');
+        const likeCount = document.getElementById('likeCount');
+        let isLiked = false;
+        
+        likeBtn.addEventListener('click', () => {
+            isLiked = !isLiked;
+            let currentLikes = parseInt(likeCount.innerText);
+            
+            if (isLiked) {
+                likeBtn.classList.add('liked');
+                likeCount.innerText = currentLikes + 1;
+            } else {
+                likeBtn.classList.remove('liked');
+                likeCount.innerText = currentLikes - 1;
+            }
+        });
+        
+        const followBtn = document.getElementById('followBtn');
+        followBtn.addEventListener('click', () => {
+            if (followBtn.innerText === 'Follow') {
+                followBtn.innerText = 'Following';
+                followBtn.style.opacity = '0.7';
+            } else {
+                followBtn.innerText = 'Follow';
+                followBtn.style.opacity = '1';
+            }
+        });
+    </script>
+</body>
+
+</html>
